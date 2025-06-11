@@ -1,1 +1,14 @@
-name: dbhvh
+name: dockerscoutci
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  stage1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: demo
+        run: echo "hello world"
