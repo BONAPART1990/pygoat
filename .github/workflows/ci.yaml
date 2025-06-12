@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: dockerenv
     env: 
-          username: ${{ dockerenv.USERNAME }}
-          password: ${{ dockerenv.PASSWORD }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
     steps:
       # - name: demo
       #   run: echo "hello world"
