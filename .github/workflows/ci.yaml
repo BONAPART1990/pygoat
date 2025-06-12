@@ -9,9 +9,9 @@ jobs:
   stage1:
     runs-on: ubuntu-latest
     environment: dockerenv
-    env: 
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+    # env: 
+    #       username: ${{ secrets.USERNAME }}
+    #       password: ${{ secrets.PASSWORD }}
     steps:
       # - name: demo
       #   run: echo "hello world"
@@ -20,8 +20,8 @@ jobs:
       - name: docker login
         uses: docker/login-action@v3.4.0
         with: 
-          username: ${{ env.USERNAME }}
-          password: ${{ env.PASSWORD }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           
           
           
