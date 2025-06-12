@@ -10,5 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: demo
-        run: echo "hello world"
+      # - name: demo
+      #   run: echo "hello world"
+      - name: checkout-git
+        uses: actions/checkout@v4
