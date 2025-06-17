@@ -7,7 +7,7 @@ on:
 
 jobs:
   stage1:
-    if = false
+    if: false
     runs-on: ubuntu-latest
     environment: dockerenv
     # env: 
