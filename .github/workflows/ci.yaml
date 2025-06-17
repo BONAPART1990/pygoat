@@ -28,6 +28,19 @@ jobs:
         with:
           push: true
           tags:  ${{ secrets.USERNAME }}/app:latest
+
+      - name: using docker scout to get venrabiklities
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: ${{ secrets.USERNAME }}/app:latest
+          sarif-file: sarif.output.json
+          summary: true
+
+      - name: Upload SARIF result
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: sarif.output.json
           
           
           
