@@ -1,0 +1,32 @@
+name: Deploy to Azure App Service
+description: Deploy a Docker container to Azure App Service
+inputs:
+  app_name:
+    required: true
+    description: Azure App Service name
+  resource_group:
+    required: true
+    description: Azure Resource Group name
+  docker_image:
+    required: true
+    description: Full Docker image name with tag
+  arm_client_secret:
+    required: true
+    description: Azure ARM client secret for authentication
+runs:
+  using: "composite"
+  steps:
+    - name: Azure Login
+      uses: Azure/login@v2.3.0
+      with:
+        creds: ${{ inputs.arm_client_secret }}
+
+    - name: Deploy Container
+      uses: Azure/cli@v2.1.0
+      with:
+        inlineScript: |
+          az webapp config container set \
+            --name ${{ inputs.app_name }} \
+            --resource-group ${{ inputs.resource_group }} \
+            --docker-custom-image-name ${{ inputs.docker_image }} \
+            --docker-registry-server-url https://index.docker.io/v1

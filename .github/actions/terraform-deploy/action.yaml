@@ -1,0 +1,32 @@
+name: Terraform Provision
+description: Initialize and apply Terraform with a specified workspace and tfvars
+inputs:
+  workspace:
+    required: true
+    description: Terraform Cloud workspace name
+  tfvars:
+    required: true
+    description: Path to the .tfvars file
+  tf_home:
+    required: false
+    default: terraform
+    description: Terraform directory
+  tf_api_token:
+    required: true
+    description: Terraform Cloud API token for authentication
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+      with:
+        cli_config_credentials_token: ${{ inputs.tf_api_token }}
+
+    - name: Apply Terraform
+      run: |
+        cd ${{ inputs.tf_home }}
+        export TF_WORKSPACE="${{ inputs.workspace }}"
+        terraform init
+        terraform apply -var-file=${{ inputs.tfvars }} -input=false -auto-approve
+        cd -
+      shell: bash
