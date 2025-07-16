@@ -5,13 +5,7 @@ module "naming" {
   suffix = ["devsecops"]
   prefix = ["dev"]
 }
-
-
-
-
-module "avm-res-web-serverfarm" {
-  
- 
+module "avm-res-web-serverfarm" { 
   source  = "Azure/avm-res-web-serverfarm/azurerm"
   version = "0.7.0"
   # insert the 4 required variables here
