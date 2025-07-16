@@ -1,4 +1,4 @@
-name: dockerscoutci
+name: ci pipeline
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  stage1:
-    if: false
+  docker-build-and-scan:
+    # if: false
     runs-on: ubuntu-latest
     environment: dockerenv
     # env: 
@@ -46,7 +46,7 @@ jobs:
   
   # JOB2        
   sonar-scan:
-    if : False
+    # if : False
     runs-on: ubuntu-latest
     environment: sonarenv   # <-- this job uses sonarenv
     steps:
@@ -66,6 +66,8 @@ jobs:
   # JOB3        
   trivy-scan:
     runs-on: ubuntu-latest
+    env:
+      TF_HOME: ${{ github.workspace }}/terraform-IAC
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -85,5 +87,15 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
+      
+      - name: Upload Terraform Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: IaC-terraform-artifact
+          path: ${{ env.TF_HOME }}
+          if-no-files-found: error      
+          retention-days: 90
+          overwrite: false      
+          include-hidden-files: false 
       
       
