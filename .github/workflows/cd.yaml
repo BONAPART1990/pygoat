@@ -25,26 +25,27 @@ jobs:
           run-id: ${{ github.event.inputs.ci_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
-        with:
-          cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN  }}
-
-      - name: Apply Terraform
-        run: |
-          cd ${{ env.TF_HOME }}
-          export TF_WORKSPACE="test"
-          terraform init
-          terraform apply -var-file=./variables/prod.tfvars -auto-approve
-
-
-
-      # - name: Terraform Provision
-      #   uses: ./.github/actions/terraform-provision
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v2.0.3
       #   with:
-      #     workspace: pygoat-test
-      #     tfvars: ./variable_values/test.tfvars
-      #     tf_api_token: ${{ secrets.TF_API_TOKEN }}
+      #     cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN  }}
+
+      # - name: Apply Terraform
+      #   run: |
+      #     cd ${{ env.TF_HOME }}
+      #     export TF_WORKSPACE="test"
+      #     terraform init
+      #     terraform apply -var-file=./variables/prod.tfvars -auto-approve
+
+
+
+      - name: Terraform Provision
+        uses: ./.github/actions/terraform-deploy
+        with:
+          workspace: test
+          tfvars: ./variables/test.tfvars
+          tf_api_token: ${{ secrets.TERRAFORM_TOKEN }}
+          tf_home: ${{ env.TF_HOME }}
 
       # - name: Deploy to AppService
       #   uses: ./.github/actions/deploy-appservice

@@ -27,6 +27,6 @@ runs:
         cd ${{ inputs.tf_home }}
         export TF_WORKSPACE="${{ inputs.workspace }}"
         terraform init
-        terraform apply -var-file=${{ inputs.tfvars }} -input=false -auto-approve
+        terraform apply -var-file=${{ inputs.tfvars }} -auto-approve
         cd -
       shell: bash
