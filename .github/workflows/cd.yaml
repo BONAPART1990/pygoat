@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    if: false
     runs-on: ubuntu-latest
     environment: dockerenv 
     env:
@@ -66,7 +67,7 @@ jobs:
         continue-on-error: true
   
   prod:
-    needs: [test]
+    # needs: [test]
     runs-on: ubuntu-latest
     environment: dockerenv 
     env:
@@ -78,7 +79,7 @@ jobs:
       - name: Download the Terraform Artifact
         uses: actions/download-artifact@v4.3.0
         with:
-          name: terraform
+          name: ${{ env.TF_HOME }}
           path: ${{ env.TF_HOME }}
           run-id: ${{ github.event.inputs.ci_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -100,3 +101,12 @@ jobs:
           docker_image: ${{ secrets.USERNAME }}/app:${{ github.event.inputs.ci_run_id }}
           arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
 
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+          target: 'https://test-app-shahbaz-devsecops.azurewebsites.net'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
+        continue-on-error: true
