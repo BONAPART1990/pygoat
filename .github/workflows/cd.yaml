@@ -40,13 +40,13 @@ jobs:
 
 
 
-      # - name: Terraform Provision
-      #   uses: ./.github/actions/terraform-deploy
-      #   with:
-      #     workspace: test
-      #     tfvars: ./variables/test.tfvars
-      #     tf_api_token: ${{ secrets.TERRAFORM_TOKEN }}
-      #     tf_home: ${{ env.TF_HOME }}
+      - name: Terraform Provision
+        uses: ./.github/actions/terraform-deploy
+        with:
+          workspace: test
+          tfvars: ./variables/test.tfvars
+          tf_api_token: ${{ secrets.TERRAFORM_TOKEN }}
+          tf_home: ${{ env.TF_HOME }}
 
       - name: Deploy to AppService
         uses: ./.github/actions/deploy-appservice

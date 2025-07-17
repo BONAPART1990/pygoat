@@ -7,7 +7,7 @@ on:
 
 jobs:
   docker-build-and-scan:
-    if: false
+    # if: false
     runs-on: ubuntu-latest
     environment: dockerenv
     # env: 
@@ -47,7 +47,7 @@ jobs:
   
   # JOB2        
   sonar-scan:
-    if : False
+    # if : False
     runs-on: ubuntu-latest
     environment: sonarenv   # <-- this job uses sonarenv
     steps:
