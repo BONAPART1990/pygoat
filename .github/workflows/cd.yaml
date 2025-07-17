@@ -52,7 +52,7 @@ jobs:
         with:
           app_name: test-app-shahbaz-devsecops
           resource_group: test-rg-shahbaz-devsecops
-          docker_image: ${{ vars.USERNAME }}/app:${{ github.event.inputs.ci_run_id }}
+          docker_image: ${{ secrets.USERNAME }}/app:${{ github.event.inputs.ci_run_id }}
           arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
 
       # - name: ZAP Scan
