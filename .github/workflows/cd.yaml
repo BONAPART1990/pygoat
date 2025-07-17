@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    if: false
+    # if: false
     runs-on: ubuntu-latest
     environment: dockerenv 
     env:
@@ -25,19 +25,6 @@ jobs:
           path: ${{ env.TF_HOME }}
           run-id: ${{ github.event.inputs.ci_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v2.0.3
-      #   with:
-      #     cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN  }}
-
-      # - name: Apply Terraform
-      #   run: |
-      #     cd ${{ env.TF_HOME }}
-      #     export TF_WORKSPACE="test"
-      #     terraform init
-      #     terraform apply -var-file=./variables/prod.tfvars -auto-approve
-
 
 
       - name: Terraform Provision
@@ -67,7 +54,7 @@ jobs:
         continue-on-error: true
   
   prod:
-    # needs: [test]
+    needs: [test]
     runs-on: ubuntu-latest
     environment: dockerenv 
     env:
