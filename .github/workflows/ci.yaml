@@ -28,13 +28,13 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags:  ${{ secrets.USERNAME }}/app:latest
+          tags:  ${{ secrets.USERNAME }}/app:${{ github.run_id }}
 
       - name: using docker scout to get venrabiklities
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: ${{ secrets.USERNAME }}/app:latest
+          image: ${{ secrets.USERNAME }}/app:${{ github.run_id }}
           sarif-file: sarif.output.json
           summary: true
 

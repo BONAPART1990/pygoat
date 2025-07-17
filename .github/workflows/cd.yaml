@@ -39,21 +39,21 @@ jobs:
 
 
 
-      - name: Terraform Provision
-        uses: ./.github/actions/terraform-deploy
-        with:
-          workspace: test
-          tfvars: ./variables/test.tfvars
-          tf_api_token: ${{ secrets.TERRAFORM_TOKEN }}
-          tf_home: ${{ env.TF_HOME }}
-
-      # - name: Deploy to AppService
-      #   uses: ./.github/actions/deploy-appservice
+      # - name: Terraform Provision
+      #   uses: ./.github/actions/terraform-deploy
       #   with:
-      #     app_name: app-taras-devsecoppapp-test-westus
-      #     resource_group: rg-taras-devsecoppapp-test-westus
-      #     docker_image: ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ github.event.inputs.ci_run_id }}
-      #     arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
+      #     workspace: test
+      #     tfvars: ./variables/test.tfvars
+      #     tf_api_token: ${{ secrets.TERRAFORM_TOKEN }}
+      #     tf_home: ${{ env.TF_HOME }}
+
+      - name: Deploy to AppService
+        uses: ./.github/actions/deploy-appservice
+        with:
+          app_name: test-app-shahbaz-devsecops
+          resource_group: test-rg-shahbaz-devsecops
+          docker_image: ${{ vars.USERNAME }}/app:${{ github.event.inputs.ci_run_id }}
+          arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
 
       # - name: ZAP Scan
       #   uses: zaproxy/action-baseline@v0.14.0
